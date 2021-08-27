@@ -60,7 +60,12 @@ actions.setGlobalState({
 // qiankun，移除当前应用的状态监听，主应用如果不需要一直监听状态时调用，否则不调用，微应用 umount 时会默认调用
 actions.offGlobalStateChange();
 // 启动 qiankun
-start()
+const opts = {
+	prefetch: false, //是否开启预加载，true 则会在第一个微应用 mount 完成后开始预加载其他微应用的静态资源。'all' 则主应用 start 后即开始预加载所有微应用静态资源。string[] 则会在第一个微应用 mounted 后开始加载数组内的微应用资源。function 则可完全自定义应用的资源加载时机 (首屏应用及次屏应用)
+	sandbox: true,	//是否开启沙箱，保证应用间样式隔离。当配置为 { strictStyleIsolation: true } 时表示开启严格的样式隔离模式。这种模式下 qiankun 会为每个微应用的容器包裹上一个 shadow dom 节点，从而确保微应用的样式不会对全局造成影响。
+	singular: false, //是否为单实例场景，单实例指的是同一时间只会渲染一个微应用
+}
+start(opts)
 
 new Vue({
   router,
